@@ -10,6 +10,9 @@ module HashProxy
     # Returns an empty string
     def to_s; ""; end
 
+    # Returns an empty string
+    def to_str; ""; end
+
     # Returns 0.0
     def to_f; 0.0; end
 
