@@ -8,24 +8,43 @@ Features
 --------
 
 * Treat Hash as an object
+* Lazily turns nested Hash objects into proxies as they are referenced
+* TODO: Lazily turn array elements into proxies.  Currently, if an array
+  is referenced, all of it's elements that are Hashes are turned into
+  proxies and what's worse, if the Array contains sub-arrays, all the
+  nested sub Array objects recursively have their own elements converted
+  to proxies.  This can have bad performance implications:
+
+          h = {:foo => [{:key1 => 'val1'}, {:key1 => 'val2'}, ... MANY MORE ..., {:key1 => 'val2'}]}
+          p = HashProxy.create_from(h)
+          # Even though we only look at the first two objects in the Array,
+          # we silently convert all of the Array's contained Hash objects to
+          # HashProxy::Proxy instances just by referencing the foo key.
+          p.foo[0..1]
 
 Examples
 --------
 
     require 'hash-proxy'
     hash = {foo: 'bar', baz: [{key: 'value', key2: 2, key3: [1,2,3]}, {key: 'value2', key2: 22, key3: [4,5,6]}], bip: 'bop'}
-    proxy = HashProxy::Proxy.new(hash)
-    proxy.baz.key3.should == [4,5,6]
+    proxy = HashProxy.create_from(hash)
+    proxy.baz.last.key3.should == [4,5,6]
 
 Requirements
 ------------
 
-* No dependencies
+* No runtime dependencies
+* To build and test, run bundle install after cloning from github
 
 Install
 -------
 
 * gem install hash-proxy
+
+Source
+------
+
+https://github.com/seifertd/hash-proxy
 
 Motivation
 ----------

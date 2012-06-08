@@ -1,4 +1,12 @@
-
+# Wrapper of Hash that allows method call semantics to hash keys and values.
+# Returns a NullObject if a key does not exist that responds to any method call.
+# Allows convenience like this
+#
+#   require 'hash_proxy'
+#   proxy = HashProxy.create_from({:foo => :bar, :baz => :bip, :stuff => {:nested => :more}})
+#   puts proxy.stuff.nested
+#   puts proxy.this.does.not.exist (to_s implemented to return empty string here)
+#
 module HashProxy
 
   # :stopdoc:
@@ -6,6 +14,12 @@ module HashProxy
   PATH = ::File.dirname(LIBPATH) + ::File::SEPARATOR
   VERSION = ::File.read(PATH + 'version.txt').strip
   # :startdoc:
+  
+  # Creates a new instance of a HashProxy::Proxy from the provided hash.
+  # Convenience factory method
+  def self.create_from(hash)
+    HashProxy::Proxy.new(hash)
+  end
 
   # Returns the library path for the module. If any arguments are given,
   # they will be joined to the end of the libray path using

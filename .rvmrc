@@ -1,1 +1,1 @@
-rvm gemset use hash-proxy
+rvm gemset use hash-proxy --create
