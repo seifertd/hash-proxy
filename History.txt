@@ -1,2 +1,6 @@
 # == Version 0.0.1 / 2012-06-07
 # * First release of hash-proxy
+# 
+# == Version 0.0.2 / 2012-06-08
+# * Convert to yard doc for "rake doc" task.
+# * Handle respond_to? in a sensible fashion.
