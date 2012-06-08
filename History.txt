@@ -1,3 +1,6 @@
+# == Version 0.0.4 / 2012-06-08
+# * Add #to_str to NullObject to avoid some rspec errors
+#
 # == Version 0.0.3 / 2012-06-08
 # * Fix homepage in gemspec
 #
