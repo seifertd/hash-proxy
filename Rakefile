@@ -12,7 +12,7 @@ Bones {
   name     'hash-proxy'
   authors  'Douglas A. Seifert'
   email    'doug@dseifert.net'
-  url      'https://github.com/dseifert/hash-proxy'
+  url      'https://github.com/seifertd/hash-proxy'
   depend_on 'bones', :development => true
   depend_on 'bones-rspec', :development => true
   depend_on 'bones-git', :development => true
