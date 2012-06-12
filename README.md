@@ -25,10 +25,19 @@ Features
 Examples
 --------
 
-    require 'hash-proxy'
+    require 'hash_proxy'
     hash = {foo: 'bar', baz: [{key: 'value', key2: 2, key3: [1,2,3]}, {key: 'value2', key2: 22, key3: [4,5,6]}], bip: 'bop'}
     proxy = HashProxy.create_from(hash)
     proxy.baz.last.key3.should == [4,5,6]
+
+Also supports hash like semantics:
+
+    proxy[:foo]    => 'bar'
+    proxy[:newkey] = 'new value'
+
+    proxy.each do |k, v|
+      puts "#{k}: #{v}"
+    end
 
 Requirements
 ------------

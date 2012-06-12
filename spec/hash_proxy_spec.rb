@@ -2,6 +2,39 @@
 require File.expand_path('../spec_helper', __FILE__)
 
 describe HashProxy do
+  it "supports enumerable" do
+    hash = {foo: 'bar', baz: 'bip', smee: 'cree'}
+    proxy = HashProxy::Proxy.new(hash)
+    iterator = proxy.each
+    iterator.to_a.should eq([[:foo, 'bar'], [:baz, 'bip'], [:smee, 'cree']])
+
+    proxy.take(1).should eq([[:foo, 'bar']])
+  end
+
+  it "behaves kind of like a hash" do
+    hash = {foo: 'bar', baz: 'bip', smee: 'cree'}
+    proxy = HashProxy::Proxy.new(hash)
+    proxy.size.should eq(3)
+    proxy.each.to_a.size.should eq(3)
+    proxy.each.to_a.map{|a| a.first}.should eq([:foo, :baz, :smee])
+    proxy.each.to_a.map{|a| a.last}.should eq(['bar', 'bip', 'cree'])
+    proxy[:foo].should eq('bar')
+  end
+
+  it "can call setters" do
+    proxy = HashProxy::Proxy.new({})
+    proxy.foo = 'foo val'
+    proxy.bar = {:bip => :baz, :smoo => :smee}
+
+    proxy.size.should eq(2)
+    proxy[:bar].class.should eq(HashProxy::Proxy)
+  end
+
+  it "handles crappy method calls" do
+    proxy = HashProxy::Proxy.new({})
+    lambda { proxy.send(:'=', 'crap') }.should raise_error(NoMethodError)
+  end
+
   it "turns hash keys into method calls" do
     hash = {foo: 'bar', baz: 'bip'}
     proxy = HashProxy::Proxy.new(hash)

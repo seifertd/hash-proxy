@@ -5,6 +5,7 @@ module HashProxy
   # hash at the key corresponding to the message.  If the
   # key does not exist, returns a NullObject instance.
   class Proxy
+    include Enumerable
     # The one and only NullObject instance
     NO_OBJECT = NullObject.new
 
@@ -24,21 +25,67 @@ module HashProxy
       @converted = {}
     end
 
-    # The magic.  Turns arbitrary method invocations into
+    # Returns the number of values stored in the underlying hash
+    #
+    # @return [Integer]
+    def size
+      @hash.size + @converted.size
+    end
+
+    # Yields to the provided block all the values in this Hash proxy.  All values
+    # are converted via #convert_value as they are yielded.  The order in which
+    # values are yielded is not deterministic.  Insertion order in the original 
+    # hash may be lost if some values are already converted.
+    def each(&blk)
+      enum = Enumerator.new do |y|
+        @converted.each {|k, v| y.yield(k,v) }
+        @hash.each {|k,v| y.yield(k, self.move_value(k)) }
+      end
+      if blk.nil?
+        enum
+      else
+        enum.each do |k,v|
+          blk.call(k,v)
+        end
+      end
+    end
+
+    # Returns the converted value in the original
+    # hash associated with the given key
+    #
+    # @param [Object] key The value to look up
+    # @return [Object] The object associated with the key
+    def [](key)
+      self.send(key)
+    end
+
+    # Sets a value after converting it to a Proxy if necessary
+    #
+    # @param [Object] key The key of the value to set
+    # @param [Object] value The value to set
+    def []=(key, value)
+      self.send("#{key}=", value)
+    end
+
+    # Turns arbitrary method invocations into
     # lookups or sets on the contained hash
     def method_missing(name, *args)
       name_str = name.to_s
       if name_str.end_with?(EQUALS)
-        @converted[name_str[0..-2]] = convert_value(args.first)
-      else
-        # Move the value from the original hash to the converted hash.
-        # Support both symbol or string keys
-        if @converted.has_key?(name_str)
-          @converted[name_str]
+        # Handle edge case (self.send(:"=", 'foo') ? why would someone do this)
+        if name_str != EQUALS
+          @converted[name_str[0..-2].to_sym] = convert_value(args.first)
         else
-          unconverted = @hash.delete(name) || @hash.delete(name_str)
-          converted = convert_value(unconverted)
-          @converted[name_str] = converted
+          super
+        end
+      else
+        # Return the value if it has already been converted
+        if @converted.has_key?(name)
+          @converted[name]
+        else
+          # Move the value from the original hash to the converted hash.
+          # Support both symbol or string keys
+          self.move_value(name, name_str)
         end
       end
     end
@@ -80,5 +127,13 @@ module HashProxy
         value || NO_OBJECT
       end
     end
+
+    # moves a value from the original hash to the converted
+    # hash after converting the value to a proxy if necessary
+    def move_value(name, name_str = name.to_s)
+      @converted[name] = self.convert_value(@hash.delete(name) || @hash.delete(name_str))
+    end
+
   end
+
 end
