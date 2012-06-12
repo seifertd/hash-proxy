@@ -56,7 +56,14 @@ module HashProxy
     # @param [Object] key The value to look up
     # @return [Object] The object associated with the key
     def [](key)
-      self.send(key)
+      # Return the value if it has already been converted
+      if @converted.has_key?(key)
+        @converted[key]
+      else
+        # Move the value from the original hash to the converted hash.
+        # Support both symbol or string keys
+        self.move_value(key)
+      end
     end
 
     # Sets a value after converting it to a Proxy if necessary
@@ -64,7 +71,7 @@ module HashProxy
     # @param [Object] key The key of the value to set
     # @param [Object] value The value to set
     def []=(key, value)
-      self.send("#{key}=", value)
+      @converted[key] = convert_value(value)
     end
 
     # Turns arbitrary method invocations into
@@ -74,19 +81,12 @@ module HashProxy
       if name_str.end_with?(EQUALS)
         # Handle edge case (self.send(:"=", 'foo') ? why would someone do this)
         if name_str != EQUALS
-          @converted[name_str[0..-2].to_sym] = convert_value(args.first)
+          self[name_str[0..-2].to_sym] = args.first
         else
           super
         end
       else
-        # Return the value if it has already been converted
-        if @converted.has_key?(name)
-          @converted[name]
-        else
-          # Move the value from the original hash to the converted hash.
-          # Support both symbol or string keys
-          self.move_value(name, name_str)
-        end
+        self[name]
       end
     end
 

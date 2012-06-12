@@ -2,6 +2,12 @@
 require File.expand_path('../spec_helper', __FILE__)
 
 describe HashProxy do
+  it "does not get confused by methods defined on Kernel" do
+    proxy = HashProxy::Proxy.new({})
+    lambda { proxy[:format] }.should_not raise_error
+    proxy[:format].should be_nil
+  end
+
   it "supports enumerable" do
     hash = {foo: 'bar', baz: 'bip', smee: 'cree'}
     proxy = HashProxy::Proxy.new(hash)

@@ -1,3 +1,9 @@
+# == Version 0.1.1 / 2012-06-12
+# * Work around weird behavior when using [] method
+#   to access keys which are methods defined on Kernel,
+#   like Kernel#format. TODO: inherit from BasicObject to
+#   avoid this?
+#
 # == Version 0.1.0 / 2012-06-12
 # * include Enumerable in Proxy
 # * Add some hash-like semantics to Proxy
