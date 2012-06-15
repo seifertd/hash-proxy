@@ -124,14 +124,21 @@ module HashProxy
       when Hash
         Proxy.new(value)
       else
-        value || NO_OBJECT
+        value.nil? ? NO_OBJECT : value
       end
     end
 
     # moves a value from the original hash to the converted
     # hash after converting the value to a proxy if necessary
     def move_value(name, name_str = name.to_s)
-      @converted[name] = self.convert_value(@hash.delete(name) || @hash.delete(name_str))
+      unconverted = if @hash.has_key?(name)
+        @hash.delete(name)
+      elsif @hash.has_key?(name_str)
+        @hash.delete(name_str)
+      else
+        nil
+      end
+      @converted[name] = self.convert_value(unconverted)
     end
 
   end

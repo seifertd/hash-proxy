@@ -1,3 +1,6 @@
+# == Version 0.1.2 / 2012-06-15
+# * Fix bug for hashes with false as a value
+#
 # == Version 0.1.1 / 2012-06-12
 # * Work around weird behavior when using [] method
 #   to access keys which are methods defined on Kernel,

@@ -67,6 +67,36 @@ Author
 
 Original author: Douglas A. Seifert (doug@dseifert.net)
 
+History
+-------
+
+### Version 0.1.2 / 2012-06-15
+* Fix bug with hashes with false as a value
+
+### Version 0.1.1 / 2012-06-12
+* Work around weird behavior when using [] method
+  to access keys which are methods defined on Kernel,
+  like Kernel#format. TODO: inherit from BasicObject to
+  avoid this?
+
+### Version 0.1.0 / 2012-06-12
+  * include Enumerable in Proxy
+  * Add some hash-like semantics to Proxy
+
+### Version 0.0.4 / 2012-06-08
+  * Add #to_str to NullObject to avoid some rspec errors
+
+### Version 0.0.3 / 2012-06-08
+  * Fix homepage in gemspec
+
+### Version 0.0.2 / 2012-06-08
+  * Convert to yard doc for "rake doc" task.
+  * Handle respond_to? in a sensible fashion.
+
+### Version 0.0.1 / 2012-06-07
+  * First release of hash-proxy
+  * Handle respond_to? in a sensible fashion.
+
 License
 -------
 
