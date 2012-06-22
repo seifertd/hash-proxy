@@ -39,6 +39,17 @@ Also supports hash like semantics:
       puts "#{k}: #{v}"
     end
 
+Limitations
+-----------
+
+Because it mixes in Enumerable, the Proxy class doesn't play nice with keys whose names correspond to
+methods on Enumerable.  The work around: for keys that are methods on Enumerable, use the hash accessor
+instead of the method call notation:
+
+    proxy = HashProxy.create_from(:size => 42)
+    proxy.size    => 1 (the number of key-value pairs in the proxied Hash)
+    proxy[:size]  => 42 (the value pointed to by the :size key)
+
 Requirements
 ------------
 

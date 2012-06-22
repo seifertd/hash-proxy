@@ -2,17 +2,23 @@
 require File.expand_path('../spec_helper', __FILE__)
 
 describe HashProxy do
+  it "works with keys called size" do
+    proxy = HashProxy.create_from(:size => 42, :bar => :foo)
+    proxy.size.should == 2
+    proxy[:size].should == 42
+  end
+
 
   it "handles booleans" do
     proxy = HashProxy.create_from(:indexed => false, :followed => true)
-    proxy[:indexed].should == false
-    proxy[:followed].should == true
+    proxy.indexed.should == false
+    proxy.followed.should == true
   end
 
   it "does not get confused by methods defined on Kernel" do
     proxy = HashProxy::Proxy.new({})
     lambda { proxy[:format] }.should_not raise_error
-    proxy[:format].should be_nil
+    proxy.format.should be_nil
   end
 
   it "supports enumerable" do
