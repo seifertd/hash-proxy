@@ -2,16 +2,25 @@
 require File.expand_path('../spec_helper', __FILE__)
 
 describe HashProxy do
+  it "works with null values" do
+    proxy = HashProxy.create_from(:null => nil)
+    proxy.size.should eq(1)
+    proxy.null.should be_nil
+    proxy.null.class.should == HashProxy::NullObject
+    proxy.null.to_a.should eq([])
+    proxy.null.to_ary.should eq([])
+  end
+
   it "works with keys called size" do
     proxy = HashProxy.create_from(:size => 42, :bar => :foo)
-    proxy.size.should == 2
+    proxy.size.should eq(2)
     proxy[:size].should == 42
   end
 
 
   it "handles booleans" do
     proxy = HashProxy.create_from(:indexed => false, :followed => true)
-    proxy.indexed.should == false
+    proxy.indexed.should eq(false)
     proxy.followed.should == true
   end
 

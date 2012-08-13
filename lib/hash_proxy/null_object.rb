@@ -7,6 +7,9 @@ module HashProxy
     # Returns an empty array
     def to_a; []; end
 
+    # Returns an empty array
+    def to_ary; []; end
+
     # Returns an empty string
     def to_s; ""; end
 
