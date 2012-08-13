@@ -6,7 +6,7 @@ describe HashProxy do
     proxy = HashProxy.create_from(:null => nil)
     proxy.size.should eq(1)
     proxy.null.should be_nil
-    proxy.null.class.should == HashProxy::NullObject
+    proxy.null.class.should eq(HashProxy::NullObject)
     proxy.null.to_a.should eq([])
     proxy.null.to_ary.should eq([])
   end

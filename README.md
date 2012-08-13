@@ -81,6 +81,9 @@ Original author: Douglas A. Seifert (doug@dseifert.net)
 History
 -------
 
+### Version 0.1.3 / 2012-08-13
+* Support to_ary method on NullObject
+
 ### Version 0.1.2 / 2012-06-15
 * Fix bug with hashes with false as a value
 
