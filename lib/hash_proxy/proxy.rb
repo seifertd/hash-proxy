@@ -12,6 +12,17 @@ module HashProxy
     # Used to check if a setter is being called
     EQUALS = '='.freeze
 
+    # Serialization
+    def marshal_dump
+      [@hash, @converted]
+    end
+
+    # Deserialization
+    def marshal_load(array)
+      @hash = array[0]
+      @converted = array[1]
+    end
+
     # Create a hashProxy::Proxy object from the provided Hash.
     #
     # @param [Hash] hash The hash we are proxying
@@ -103,7 +114,7 @@ module HashProxy
     def respond_to?(method)
       method_name = method.to_s
       method_name.gsub(/=$/, '')
-      (@hash.keys.map(&:to_s) + @converted.keys.map(&:to_s)).include?(method_name) || super
+      (@hash && @converted && (@hash.keys.map(&:to_s) + @converted.keys.map(&:to_s)).include?(method_name)) || super
     end
 
     # Converts an arbitrary object as follows:

@@ -2,6 +2,8 @@
 *.rbc
 .bundle
 .config
+.specification
+hash-proxy.gemspec
 coverage
 InstalledFiles
 lib/bundler/man
