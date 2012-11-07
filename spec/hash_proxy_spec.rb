@@ -2,6 +2,14 @@
 require File.expand_path('../spec_helper', __FILE__)
 
 describe HashProxy do
+  it "can be serialized and deserialized" do
+    proxy = HashProxy.create_from(:size => 42, :bar => :foo)
+    data = Marshal.dump(proxy)
+    proxy2 = Marshal.load(data)
+    proxy.keys.should eq(proxy2.keys)
+    proxy.values.should eq(proxy2.values)
+  end
+
   it "works with null values" do
     proxy = HashProxy.create_from(:null => nil)
     proxy.size.should eq(1)

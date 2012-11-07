@@ -43,6 +43,16 @@ module HashProxy
       @hash.size + @converted.size
     end
 
+    # Get all keys in this hash proxy
+    def keys
+      (@hash.keys + @converted.keys)
+    end
+
+    # Get all keys in this hash proxy
+    def values
+      (@hash.values + @converted.values)
+    end
+
     # Yields to the provided block all the values in this Hash proxy.  All values
     # are converted via #convert_value as they are yielded.  The order in which
     # values are yielded is not deterministic.  Insertion order in the original 
