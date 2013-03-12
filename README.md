@@ -53,6 +53,8 @@ instead of the method call notation:
 Requirements
 ------------
 
+* Probably does not work on ruby 1.8.x due to dependency on 
+  json module from the 1.9.x standard library
 * No runtime dependencies
 * To build and test, run bundle install after cloning from github
 
@@ -80,6 +82,12 @@ Original author: Douglas A. Seifert (doug@dseifert.net)
 
 History
 -------
+
+### Version 0.1.5 / 2013-03-12
+* Support #to_json
+
+### Version 0.1.4 / 2012-11-07
+* Support serialization
 
 ### Version 0.1.3 / 2012-08-13
 * Support to_ary method on NullObject
