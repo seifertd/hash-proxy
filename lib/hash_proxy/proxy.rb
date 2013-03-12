@@ -26,12 +26,7 @@ module HashProxy
     # Create a hashProxy::Proxy object from the provided Hash.
     #
     # @param [Hash] hash The hash we are proxying
-    # @option options [Boolean] :lazy (true) If true, values in the hash are converted
-    #     to hash proxies only when requested via
-    #     a method call.  If false, all nested Hash
-    #     and Array objects are converted to Proxy
-    #     objects at creation time
-    def initialize(hash, options = {})
+    def initialize(hash)
       @hash = hash
       @converted = {}
     end
@@ -93,6 +88,11 @@ module HashProxy
     # @param [Object] value The value to set
     def []=(key, value)
       @converted[key] = convert_value(value)
+    end
+
+    # Handle conversion to json
+    def to_json(options = nil)
+      @hash.merge(@converted).to_json(options)
     end
 
     # Turns arbitrary method invocations into
