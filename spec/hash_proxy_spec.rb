@@ -137,6 +137,35 @@ describe HashProxy do
     proxy.key.does.not.exist.to_a.should eq([])
   end
 
+  describe "json conversion" do
+    require 'json'
+    it "should work when no keys are converted" do
+      hash = {foo: 'bar', baz: {subkey: 'sub1', subkey2: 'sub2'}}
+      proxy = HashProxy.create_from hash
+      proxy.to_json.should eq(hash.to_json)
+    end
+    it "should work when normal value has been converted" do
+      orig = {foo: 'bar', baz: {subkey: 'sub1', subkey2: 'sub2'}}
+      hash = Marshal.load(Marshal.dump(orig))
+      proxy = HashProxy.create_from hash
+      proxy.foo.should eq('bar')
+      # Need to parse back to ruby arrays so we can use the ruby == operator
+      # to compare
+      JSON.parse(proxy.to_json).should eq(JSON.parse(orig.to_json))
+    end
+    it "should work when nested value has been converted" do
+      orig = {foo: 'bar', baz: {subkey: 'sub1', subkey2: 'sub2'}}
+      hash = Marshal.load(Marshal.dump(orig))
+      proxy = HashProxy.create_from hash
+      proxy.baz.each do |key, val|
+        orig[:baz][key].should eq(val)
+      end
+      # Need to parse back to ruby arrays so we can use the ruby == operator
+      # to compare
+      JSON.parse(proxy.to_json).should eq(JSON.parse(orig.to_json))
+    end
+  end
+
   # TODO: Am I itching badly enough to make this pass? ....
   #it "should lazily handle nested arrays" do
   #  hash = {:foo => [{:key1 => 'val11', :key2 => 'val12'}, {:key1 => 'val21', :key2 => 'val22'}], :bar => :baz}

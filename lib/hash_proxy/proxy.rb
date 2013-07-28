@@ -90,6 +90,11 @@ module HashProxy
       @converted[key] = convert_value(value)
     end
 
+    # Handle conversion to json
+    def to_json(options = nil)
+      @hash.merge(@converted).to_json(options)
+    end
+
     # Turns arbitrary method invocations into
     # lookups or sets on the contained hash
     def method_missing(name, *args)

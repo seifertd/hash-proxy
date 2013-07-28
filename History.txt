@@ -1,3 +1,6 @@
+# == Version 0.1.5 / 2013-03-12
+# * Support #to_json
+#
 # == Version 0.1.4 / 2012-11-07
 # * Support serialization
 #
