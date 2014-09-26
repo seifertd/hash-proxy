@@ -121,7 +121,7 @@ module HashProxy
     #    p.stuff => NullObject
     #    p.respond_to?(:stuff) => true
     #
-    def respond_to?(method)
+    def respond_to?(method, include_all = false)
       method_name = method.to_s
       method_name.gsub(/=$/, '')
       (@hash && @converted && (@hash.keys.map(&:to_s) + @converted.keys.map(&:to_s)).include?(method_name)) || super
