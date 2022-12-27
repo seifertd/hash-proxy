@@ -13,11 +13,7 @@ Bones {
   authors  'Douglas A. Seifert'
   email    'doug@dseifert.net'
   url      'https://github.com/seifertd/hash-proxy'
-  depend_on 'bones', :development => true
-  depend_on 'bones-rspec', :development => true
-  depend_on 'bones-git', :development => true
-  depend_on 'bones-yard', :development => true
-  depend_on 'redcarpet', :development => true
+  license  'MIT'
 
   yard.exclude ['version.txt']
 }
