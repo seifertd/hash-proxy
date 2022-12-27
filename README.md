@@ -82,6 +82,9 @@ Original author: Douglas A. Seifert (doug@dseifert.net)
 
 History
 -------
+### Version 1.0.0 / 2022-12-27
+* upgrade to latest versions of everything
+* switch specs over to expect style
 
 ### Version 0.1.6 / 2014-09-25
 * Pin to rspec < 3

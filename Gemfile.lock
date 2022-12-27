@@ -1,11 +1,13 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    bones (3.8.4)
+    addressable (2.8.1)
+      public_suffix (>= 2.0.2, < 6.0)
+    bones (3.9.0)
       little-plugger (~> 1.1)
       loquacious (~> 1.9)
-      rake (~> 12.0)
-      rdoc (~> 5.0)
+      rake (~> 13.0)
+      rdoc (~> 6.0)
     bones-git (1.3.1)
       git (~> 1.2)
     bones-rspec (2.0.1)
@@ -14,27 +16,37 @@ GEM
     bones-yard (1.0.0)
       bones (>= 3.5.0)
       yard (>= 0.5.8)
-    diff-lcs (1.3)
-    git (1.5.0)
+    diff-lcs (1.5.0)
+    git (1.13.0)
+      addressable (~> 2.8)
+      rchardet (~> 1.8)
     little-plugger (1.1.4)
     loquacious (1.9.1)
-    rake (12.3.1)
-    rdoc (5.1.0)
-    redcarpet (3.4.0)
-    rspec (3.8.0)
-      rspec-core (~> 3.8.0)
-      rspec-expectations (~> 3.8.0)
-      rspec-mocks (~> 3.8.0)
-    rspec-core (3.8.0)
-      rspec-support (~> 3.8.0)
-    rspec-expectations (3.8.2)
+    psych (5.0.1)
+      stringio
+    public_suffix (5.0.1)
+    rake (13.0.6)
+    rchardet (1.8.0)
+    rdoc (6.5.0)
+      psych (>= 4.0.0)
+    redcarpet (3.5.1)
+    rspec (3.12.0)
+      rspec-core (~> 3.12.0)
+      rspec-expectations (~> 3.12.0)
+      rspec-mocks (~> 3.12.0)
+    rspec-core (3.12.0)
+      rspec-support (~> 3.12.0)
+    rspec-expectations (3.12.1)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.8.0)
-    rspec-mocks (3.8.0)
+      rspec-support (~> 3.12.0)
+    rspec-mocks (3.12.1)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.8.0)
-    rspec-support (3.8.0)
-    yard (0.9.16)
+      rspec-support (~> 3.12.0)
+    rspec-support (3.12.0)
+    stringio (3.0.4)
+    webrick (1.7.0)
+    yard (0.9.28)
+      webrick (~> 1.7.0)
 
 PLATFORMS
   ruby
@@ -48,4 +60,4 @@ DEPENDENCIES
   rspec
 
 BUNDLED WITH
-   1.15.4
+   2.4.1

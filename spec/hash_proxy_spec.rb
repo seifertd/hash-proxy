@@ -34,7 +34,7 @@ describe HashProxy do
 
   it "does not get confused by methods defined on Kernel" do
     proxy = HashProxy::Proxy.new({})
-    expect(lambda { proxy[:format] }).to_not raise_error
+    expect{proxy[:format]}.to_not raise_error
     expect(proxy.format).to be_nil
   end
 
@@ -68,10 +68,12 @@ describe HashProxy do
 
   it "handles crappy method calls" do
     proxy = HashProxy::Proxy.new({})
-    expect(lambda { proxy.send(:'=', 'crap') }).to raise_error(NoMethodError)
+    expect do
+      proxy.send(:'=', 'crap')
+    end.to raise_error(NoMethodError)
   end
 
-  it "turns hash keys i).to method calls" do
+  it "turns hash keys into method calls" do
     hash = {foo: 'bar', baz: 'bip'}
     proxy = HashProxy::Proxy.new(hash)
     expect(proxy.foo).to eq('bar')
@@ -109,14 +111,14 @@ describe HashProxy do
 
   it "should not convert values if nothing is referenced" do
     hash = {'foo' => 'bar', 'arr1' => [1,2,3], 'baz' => 'bip'}
-    HashProxy::Proxy.new(hash)
-    expect(HashProxy::Proxy).not_to receive(:convert_value)
+    proxy = HashProxy::Proxy.new(hash)
+    expect(HashProxy::Proxy).to_not receive(:convert_value)
+    proxy.to_s
   end
 
   it "should convert values if they are referenced" do
     hash = {foo: 'bar', baz: 'bip'}
     proxy = HashProxy::Proxy.new(hash)
-    #proxy.should_receive(:convert_value).once.with('bar').and_return('bar')
     expect(proxy).to receive(:convert_value).once.with('bar').and_return('bar')
     expect(proxy.foo).to eq('bar')
   end
@@ -166,11 +168,11 @@ describe HashProxy do
     end
   end
 
-  # TODO: Am I itching badly enough).to make this pass? ....
+  # TODO: Am I itching badly enough to make this pass? ....
   #it "should lazily handle nested arrays" do
   #  hash = {:foo => [{:key1 => 'val11', :key2 => 'val12'}, {:key1 => 'val21', :key2 => 'val22'}], :bar => :baz}
   #  proxy = HashProxy.create_from(hash)
-  #  expect(proxy.foo).to eq([{:key1 => 'val11', :key2 => 'val12'}, {:key1 => 'val21', :key2 => 'val22'}])
+  #  proxy.foo.should eq([{:key1 => 'val11', :key2 => 'val12'}, {:key1 => 'val21', :key2 => 'val22'}])
   #end
 
 end
