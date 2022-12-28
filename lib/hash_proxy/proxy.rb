@@ -1,3 +1,5 @@
+require 'json'
+
 module HashProxy
   # Class that wraps a hash and converts message sends to
   # hash lookups and sets. If sent a message ending with '=',

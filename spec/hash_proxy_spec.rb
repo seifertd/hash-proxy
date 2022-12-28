@@ -140,7 +140,6 @@ describe HashProxy do
   end
 
   describe "json conversion" do
-    require 'json'
     it "should work when no keys are converted" do
       hash = {foo: 'bar', baz: {subkey: 'sub1', subkey2: 'sub2'}}
       proxy = HashProxy.create_from hash
