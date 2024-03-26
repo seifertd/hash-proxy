@@ -22,12 +22,12 @@ GEM
       rchardet (~> 1.8)
     little-plugger (1.1.4)
     loquacious (1.9.1)
-    psych (5.0.1)
+    psych (5.1.2)
       stringio
     public_suffix (5.0.1)
     rake (13.0.6)
     rchardet (1.8.0)
-    rdoc (6.5.0)
+    rdoc (6.6.3.1)
       psych (>= 4.0.0)
     redcarpet (3.5.1)
     rspec (3.12.0)
@@ -43,7 +43,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.12.0)
     rspec-support (3.12.0)
-    stringio (3.0.4)
+    stringio (3.1.0)
     yard (0.9.36)
 
 PLATFORMS
