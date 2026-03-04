@@ -1,3 +1,7 @@
+# == Version 1.0.1 / 2014-09-25
+# * Upgrade to latest versions of everything
+# * Housekeeping in the gemspec
+#
 # == Version 1.0.0 / 2014-09-25
 # * Upgrade to latest versions of everything
 # * Switch specs over to expect style
