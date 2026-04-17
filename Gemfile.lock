@@ -50,7 +50,7 @@ GEM
     rspec-support (3.13.7)
     stringio (3.2.0)
     tsort (0.2.0)
-    yard (0.9.38)
+    yard (0.9.42)
 
 PLATFORMS
   ruby
